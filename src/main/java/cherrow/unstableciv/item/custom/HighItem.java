@@ -20,14 +20,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import java.util.Map;
 
 public class HighItem extends Item {
-    private static final Map<Block, Block> CHISEL_MAP =
-            Map.of(
-                    Blocks.STONE, Blocks.STONE_BRICKS,
-                    Blocks.END_STONE, Blocks.END_STONE_BRICKS,
-                    Blocks.OAK_LOG, Blocks.DIAMOND_BLOCK,
-                    Blocks.GOLD_BLOCK, Blocks.NETHERITE_BLOCK
-            );
-
     public HighItem(Settings settings) {
         super(settings);
     }
@@ -41,25 +33,4 @@ public class HighItem extends Item {
         return TypedActionResult.success(user.getStackInHand(hand));
     }
 
-    @Override
-    public ActionResult useOnBlock(ItemUsageContext context) {
-        World world = context.getWorld();
-        Block clickedBlock = world.getBlockState(context.getBlockPos()).getBlock();
-
-        if(CHISEL_MAP.containsKey(clickedBlock)) {
-            if(!world.isClient()) {
-                world.setBlockState(context.getBlockPos(), CHISEL_MAP.get(clickedBlock).getDefaultState());
-
-                context.getStack().damage(1, ((ServerWorld) world), ((ServerPlayerEntity) context.getPlayer()),
-                        item -> {
-                            assert context.getPlayer() != null;
-                            context.getPlayer().sendEquipmentBreakStatus(item, EquipmentSlot.MAINHAND);
-                        });
-
-                world.playSound(null, context.getBlockPos(), SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS);
-            }
-        }
-
-        return ActionResult.SUCCESS;
-    }
 }
