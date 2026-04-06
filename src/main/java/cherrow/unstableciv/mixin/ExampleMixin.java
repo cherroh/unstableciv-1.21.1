@@ -1,7 +1,10 @@
 package cherrow.unstableciv.mixin;
 
+import net.minecraft.client.render.GameRenderer;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
