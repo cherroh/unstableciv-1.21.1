@@ -1,5 +1,6 @@
 package cherrow.unstableciv.item;
 import cherrow.unstableciv.Unstableciv;
+import cherrow.unstableciv.item.custom.HighItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -10,7 +11,7 @@ import net.minecraft.util.Identifier;
 
 public class ModItems {
     public static final Item WHITE_STUFF = registerItem("white_stuff", new Item(new Item.Settings()));
-    public static final Item BLUE_STUFF = registerItem("blue_stuff", new Item(new Item.Settings()));
+    public static final Item BLUE_STUFF = registerItem("blue_stuff", new HighItem(new Item.Settings()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Unstableciv.MOD_ID, name), item);
