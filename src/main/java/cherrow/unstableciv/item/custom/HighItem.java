@@ -39,15 +39,25 @@ public class HighItem extends Item {
 
     @Override
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.SPYGLASS;
+        return UseAction.BOW;
     }
 
     @Override
     public ItemStack finishUsing(ItemStack stack, World world, LivingEntity user) {
-        if (world.isClient) {
+        if (!world.isClient) {
+            if (user instanceof PlayerEntity player) {
+
+                // Apply 1 second cooldown (20 ticks)
+                player.getItemCooldownManager().set(this, 20);
+
+                // Only consume in survival
+                if (!player.getAbilities().creativeMode) {
+                    stack.decrement(1);
+                }
+            }
+        } else {
             PinkEffectClient.toggle();
         }
         return stack;
     }
-
 }
