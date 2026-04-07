@@ -1,0 +1,8 @@
+{
+  "snort": {
+    "subtitle": "sounds.unstableciv.snort",
+    "sounds": [
+      "unstableciv:snort"
+    ]
+  }
+}

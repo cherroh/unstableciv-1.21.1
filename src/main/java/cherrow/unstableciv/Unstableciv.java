@@ -1,6 +1,7 @@
 package cherrow.unstableciv;
 
 import cherrow.unstableciv.item.ModItems;
+import cherrow.unstableciv.sound.ModSounds;
 import net.fabricmc.api.ModInitializer;
 
 import org.slf4j.Logger;
@@ -23,5 +24,6 @@ public class Unstableciv implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 
 		ModItems.registerModItems();
+		ModSounds.registerSounds();
 	}
 }
