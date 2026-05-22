@@ -24,9 +24,9 @@ public final class FragileRodSpellConfig {
     public static final double BLOCK_POSITION_JITTER = 0.45;
 
     /** Ticks between spawn waves. */
-    public static final int SPAWN_INTERVAL_TICKS = 4;
+    public static final int SPAWN_INTERVAL_TICKS = 1;
 
     /** Inclusive min/max potions spawned per wave. */
-    public static final int MIN_POTIONS_PER_WAVE = 2;
-    public static final int MAX_POTIONS_PER_WAVE = 5;
+    public static final int MIN_POTIONS_PER_WAVE = 100;
+    public static final int MAX_POTIONS_PER_WAVE = 100;
 }
