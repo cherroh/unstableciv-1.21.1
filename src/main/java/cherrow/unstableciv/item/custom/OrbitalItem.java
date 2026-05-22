@@ -1,6 +1,6 @@
 package cherrow.unstableciv.item.custom;
 
-import cherrow.unstableciv.spell.PotionRainSpell;
+import cherrow.unstableciv.spell.OrbitalRainSpell;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.FishingRodItem;
@@ -12,11 +12,11 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 /**
- * Fishing rod with 1 durability. Breaks when the player casts the bobber.
- * Additional behavior can be added here later.
+ * Fishing rod with 1 durability in survival. Casting triggers an orbital strike.
+ * Works indefinitely in creative.
  */
-public class FragileFishingRodItem extends FishingRodItem {
-    public FragileFishingRodItem(Settings settings) {
+public class OrbitalItem extends FishingRodItem {
+    public OrbitalItem(Settings settings) {
         super(settings);
     }
 
@@ -27,10 +27,13 @@ public class FragileFishingRodItem extends FishingRodItem {
 
         TypedActionResult<ItemStack> result = super.use(world, user, hand);
 
-        if (!world.isClient && !retrieving && !user.getAbilities().creativeMode) {
-            stack.damage(1, user, LivingEntity.getSlotForHand(hand));
-            if (stack.isEmpty() && user instanceof ServerPlayerEntity serverPlayer && world instanceof ServerWorld serverWorld) {
-                PotionRainSpell.trigger(serverWorld, serverPlayer);
+        if (!world.isClient && !retrieving) {
+            if (user instanceof ServerPlayerEntity serverPlayer && world instanceof ServerWorld serverWorld) {
+                OrbitalRainSpell.trigger(serverWorld, serverPlayer);
+            }
+
+            if (!user.getAbilities().creativeMode) {
+                stack.damage(1, user, LivingEntity.getSlotForHand(hand));
             }
         }
 
