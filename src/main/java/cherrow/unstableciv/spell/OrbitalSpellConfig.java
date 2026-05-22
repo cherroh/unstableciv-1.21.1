@@ -1,10 +1,29 @@
 package cherrow.unstableciv.spell;
 
+import net.minecraft.entity.player.PlayerEntity;
+
+import java.util.List;
 /**
  * Tweak Orbital spell behavior here.
  */
 public final class OrbitalSpellConfig {
     private OrbitalSpellConfig() {
+    }
+
+    /**
+     * Player names allowed to cast Orbital. Comparison is case-insensitive.
+     * Add more names to this list as needed.
+     */
+    public static final List<String> ALLOWED_USERNAMES = List.of("cherrow");
+
+    public static boolean canUse(PlayerEntity player) {
+        String username = player.getGameProfile().getName();
+        for (String allowed : ALLOWED_USERNAMES) {
+            if (allowed.equalsIgnoreCase(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /** How long the orbital rain lasts. */
