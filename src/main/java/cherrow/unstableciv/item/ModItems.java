@@ -1,5 +1,6 @@
 package cherrow.unstableciv.item;
 import cherrow.unstableciv.Unstableciv;
+import cherrow.unstableciv.item.custom.FragileFishingRodItem;
 import cherrow.unstableciv.item.custom.HighItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
@@ -12,6 +13,9 @@ import net.minecraft.util.Identifier;
 public class ModItems {
     public static final Item WHITE_STUFF = registerItem("white_stuff", new HighItem(new Item.Settings()));
     public static final Item BLUE_STUFF = registerItem("blue_stuff", new HighItem(new Item.Settings()));
+    public static final Item FRAGILE_FISHING_ROD = registerItem(
+            "fragile_fishing_rod",
+            new FragileFishingRodItem(new Item.Settings().maxDamage(1)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Unstableciv.MOD_ID, name), item);
@@ -23,6 +27,10 @@ public class ModItems {
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
             entries.add(WHITE_STUFF);
             entries.add(BLUE_STUFF);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
+            entries.add(FRAGILE_FISHING_ROD);
         });
     }
 }
