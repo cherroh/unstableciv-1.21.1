@@ -27,6 +27,6 @@ public final class FragileRodSpellConfig {
     public static final int SPAWN_INTERVAL_TICKS = 1;
 
     /** Inclusive min/max potions spawned per wave. */
-    public static final int MIN_POTIONS_PER_WAVE = 100;
-    public static final int MAX_POTIONS_PER_WAVE = 100;
+    public static final int MIN_POTIONS_PER_WAVE = 5;
+    public static final int MAX_POTIONS_PER_WAVE = 5;
 }

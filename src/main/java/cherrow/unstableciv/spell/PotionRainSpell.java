@@ -1,8 +1,14 @@
 package cherrow.unstableciv.spell;
 
+import net.minecraft.block.Blocks;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.PotionContentsComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
+import net.minecraft.entity.vehicle.TntMinecartEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potions;
@@ -69,6 +75,9 @@ public final class PotionRainSpell {
         PotionEntity potion = new PotionEntity(world, x, FragileRodSpellConfig.SPAWN_Y, z);
         potion.setItem(HARMING_SPLASH_STACK.copy());
         world.spawnEntity(potion);
+
+        TntMinecartEntity xd = new TntMinecartEntity(world, x, FragileRodSpellConfig.SPAWN_Y, z);
+        world.spawnEntity(xd);
     }
 
     private static final class ActiveRain {
