@@ -15,7 +15,7 @@ public final class OrbitalSpellConfig {
     public static final double SPAWN_RADIUS = 100.0;
 
     /** World Y coordinate where projectiles appear before falling. */
-    public static final double SPAWN_Y = 255.0;
+    public static final double SPAWN_Y = 150.0;
 
     /**
      * Random offset applied to X/Z so spawns are not locked to block centers.
@@ -27,9 +27,9 @@ public final class OrbitalSpellConfig {
     public static final int SPAWN_INTERVAL_TICKS = 1;
 
     /** Inclusive min/max projectiles spawned per wave. */
-    public static final int MIN_PROJECTILES_PER_WAVE = 5;
-    public static final int MAX_PROJECTILES_PER_WAVE = 5;
+    public static final int MIN_PROJECTILES_PER_WAVE = 20;
+    public static final int MAX_PROJECTILES_PER_WAVE = 20;
 
     /** Downward speed for ghast-style fireballs (negative Y). */
-    public static final double FIREBALL_DOWNWARD_SPEED = 1.0;
+    public static final double FIREBALL_DOWNWARD_SPEED = 2.0;
 }
