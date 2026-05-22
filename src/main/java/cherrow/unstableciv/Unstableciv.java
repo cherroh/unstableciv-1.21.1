@@ -2,7 +2,9 @@ package cherrow.unstableciv;
 
 import cherrow.unstableciv.item.ModItems;
 import cherrow.unstableciv.sound.ModSounds;
+import cherrow.unstableciv.spell.PotionRainSpell;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,5 +27,7 @@ public class Unstableciv implements ModInitializer {
 
 		ModItems.registerModItems();
 		ModSounds.registerSounds();
+
+		ServerTickEvents.END_SERVER_TICK.register(PotionRainSpell::tick);
 	}
 }
