@@ -35,6 +35,12 @@ public final class DiamondOrbitalSpellConfig {
     public static final int EXPANSION_DURATION_SECONDS = 2;
     public static final int EXPANSION_DURATION_TICKS = EXPANSION_DURATION_SECONDS * 20;
 
+    /**
+     * Ease-out strength for ring expansion. {@code 1} is linear; higher values start faster
+     * and decelerate more toward the end (e.g. {@code 3} is a cubic ease-out).
+     */
+    public static final double EXPANSION_EASE_OUT_POWER = 3.0;
+
     /** Fuse length for all spawned TNT once the effect begins. */
     public static final int TNT_FUSE_TICKS = 100;
 }

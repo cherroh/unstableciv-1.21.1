@@ -110,6 +110,15 @@ public final class DiamondOrbitalStrike {
         return tnt;
     }
 
+    private static double easeOutExpansion(double progress) {
+        double clamped = Math.clamp(progress, 0.0, 1.0);
+        return 1.0 - Math.pow(1.0 - clamped, DiamondOrbitalSpellConfig.EXPANSION_EASE_OUT_POWER);
+    }
+
+    private static double lerp(double start, double end, double progress) {
+        return start + (end - start) * progress;
+    }
+
     private static final class AnimatedTnt {
         private final UUID entityUuid;
         private final double targetX;
@@ -154,7 +163,9 @@ public final class DiamondOrbitalStrike {
                 return false;
             }
 
-            double progress = (double) ticksElapsed / DiamondOrbitalSpellConfig.EXPANSION_DURATION_TICKS;
+            double rawProgress = (double) ticksElapsed / DiamondOrbitalSpellConfig.EXPANSION_DURATION_TICKS;
+            double easedProgress = easeOutExpansion(rawProgress);
+            boolean finished = ticksElapsed >= DiamondOrbitalSpellConfig.EXPANSION_DURATION_TICKS;
 
             for (AnimatedTnt animated : animatedTnt) {
                 TntEntity tnt = getTnt(world, animated.entityUuid);
@@ -162,12 +173,22 @@ public final class DiamondOrbitalStrike {
                     continue;
                 }
 
-                double x = startX + (animated.targetX - startX) * progress;
-                double z = startZ + (animated.targetZ - startZ) * progress;
-                tnt.setPosition(x, tnt.getY(), z);
+                double desiredX = lerp(startX, animated.targetX, easedProgress);
+                double desiredZ = lerp(startZ, animated.targetZ, easedProgress);
+
+                if (finished) {
+                    tnt.setPosition(desiredX, tnt.getY(), desiredZ);
+                    tnt.setVelocity(0.0, tnt.getVelocity().y, 0.0);
+                    continue;
+                }
+
+                // Steer with velocity so the client can interpolate between 20 TPS server ticks.
+                double velocityX = desiredX - tnt.getX();
+                double velocityZ = desiredZ - tnt.getZ();
+                tnt.setVelocity(velocityX, tnt.getVelocity().y, velocityZ);
             }
 
-            return ticksElapsed < DiamondOrbitalSpellConfig.EXPANSION_DURATION_TICKS;
+            return !finished;
         }
 
         private static TntEntity getTnt(ServerWorld world, UUID uuid) {
