@@ -39,7 +39,7 @@ import java.util.UUID;
 /**
  * Server-side orbital strike: rains hazards from above the player.
  */
-public final class OrbitalRainSpell {
+public final class OrbitalThingy {
     private static final List<ActiveRain> ACTIVE_RAINS = new ArrayList<>();
     private static final ItemStack HARMING_SPLASH_STACK =
             PotionContentsComponent.createStack(Items.SPLASH_POTION, Potions.HARMING);
@@ -60,7 +60,7 @@ public final class OrbitalRainSpell {
         CHARGED_CREEPER
     }
 
-    private OrbitalRainSpell() {
+    private OrbitalThingy() {
     }
 
     public static void trigger(ServerWorld world, ServerPlayerEntity player) {

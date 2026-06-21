@@ -1,6 +1,6 @@
 package cherrow.unstableciv.item.custom;
 
-import cherrow.unstableciv.spell.OrbitalRainSpell;
+import cherrow.unstableciv.spell.OrbitalThingy;
 import cherrow.unstableciv.spell.OrbitalSpellConfig;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -40,7 +40,7 @@ public class OrbitalItem extends FishingRodItem {
 
         if (!world.isClient && !retrieving) {
             if (user instanceof ServerPlayerEntity serverPlayer && world instanceof ServerWorld serverWorld) {
-                OrbitalRainSpell.trigger(serverWorld, serverPlayer);
+                OrbitalThingy.trigger(serverWorld, serverPlayer);
             }
 
             if (!user.getAbilities().creativeMode) {
