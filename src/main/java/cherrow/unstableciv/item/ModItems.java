@@ -7,9 +7,7 @@ import cherrow.unstableciv.item.custom.HighItem;
 import cherrow.unstableciv.item.custom.IronFishingRodItem;
 import cherrow.unstableciv.item.custom.OrbitalItem;
 import cherrow.unstableciv.item.custom.TotemOfRespawningItem;
-import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -44,22 +42,5 @@ public class ModItems {
 
     public static void registerModItems() {
         Unstableciv.LOGGER.info("Registering Mod Items for " + Unstableciv.MOD_ID);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.INGREDIENTS).register(entries -> {
-            entries.add(WHITE_STUFF);
-            entries.add(BLUE_STUFF);
-        });
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
-            entries.add(ORBITAL);
-            entries.add(COPPER_FISHING_ROD);
-            entries.add(IRON_FISHING_ROD);
-            entries.add(GOLD_FISHING_ROD);
-            entries.add(DIAMOND_FISHING_ROD);
-        });
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
-            entries.add(TOTEM_OF_RESPAWNING);
-        });
     }
 }

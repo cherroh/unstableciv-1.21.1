@@ -1,5 +1,6 @@
 package cherrow.unstableciv;
 
+import cherrow.unstableciv.item.ModItemGroups;
 import cherrow.unstableciv.item.ModItems;
 import cherrow.unstableciv.sound.ModSounds;
 import cherrow.unstableciv.spell.DiamondOrbitalStrike;
@@ -27,6 +28,7 @@ public class Unstableciv implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 
 		ModItems.registerModItems();
+		ModItemGroups.registerItemGroups();
 		ModSounds.registerSounds();
 
 		ServerTickEvents.END_SERVER_TICK.register(server -> {
