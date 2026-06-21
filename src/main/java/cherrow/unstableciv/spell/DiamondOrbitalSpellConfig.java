@@ -36,5 +36,5 @@ public final class DiamondOrbitalSpellConfig {
     public static final int EXPANSION_DURATION_TICKS = EXPANSION_DURATION_SECONDS * 20;
 
     /** Fuse length for all spawned TNT once the effect begins. */
-    public static final int TNT_FUSE_TICKS = 80;
+    public static final int TNT_FUSE_TICKS = 100;
 }

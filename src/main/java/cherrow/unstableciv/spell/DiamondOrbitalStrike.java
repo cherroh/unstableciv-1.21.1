@@ -7,6 +7,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
@@ -27,18 +28,22 @@ public final class DiamondOrbitalStrike {
 
     public static void trigger(ServerWorld world, ServerPlayerEntity player) {
         Vec3d referencePoint = getReferencePoint(world, player);
+        double centerX = referencePoint.x;
+        double centerZ = referencePoint.z;
         double spawnY = referencePoint.y + DiamondOrbitalSpellConfig.CENTER_TNT_HEIGHT_ABOVE_REFERENCE;
-        Vec3d spawnPoint = new Vec3d(referencePoint.x, spawnY, referencePoint.z);
+        Vec3d spawnPoint = new Vec3d(centerX, spawnY, centerZ);
 
-        spawnLitTnt(world, player, spawnPoint);
+        List<AnimatedTnt> animatedTnt = new ArrayList<>(1 + DiamondOrbitalSpellConfig.RING_COUNT * DiamondOrbitalSpellConfig.TNT_PER_RING);
 
-        List<AnimatedTnt> animatedTnt = new ArrayList<>(DiamondOrbitalSpellConfig.RING_COUNT * DiamondOrbitalSpellConfig.TNT_PER_RING);
+        TntEntity centerTnt = spawnLitTnt(world, player, spawnPoint);
+        animatedTnt.add(new AnimatedTnt(centerTnt.getUuid(), centerX, centerZ));
+
         for (int ring = 0; ring < DiamondOrbitalSpellConfig.RING_COUNT; ring++) {
             double targetRadius = DiamondOrbitalSpellConfig.RING_RADIUS_SPACING * (ring + 1);
-            spawnRing(world, player, referencePoint, spawnPoint, targetRadius, animatedTnt);
+            spawnRing(world, player, centerX, centerZ, spawnPoint, targetRadius, animatedTnt);
         }
 
-        ACTIVE_STRIKES.add(new ActiveStrike(world.getRegistryKey(), referencePoint, animatedTnt, 0));
+        ACTIVE_STRIKES.add(new ActiveStrike(world.getRegistryKey(), centerX, centerZ, animatedTnt, 0));
     }
 
     public static void tick(MinecraftServer server) {
@@ -63,24 +68,35 @@ public final class DiamondOrbitalStrike {
         ));
 
         if (hit.getType() == HitResult.Type.BLOCK) {
-            return hit.getPos();
+            BlockPos blockPos = hit.getBlockPos();
+            return new Vec3d(
+                    blockPos.getX() + 0.5,
+                    blockPos.getY() + 1.0,
+                    blockPos.getZ() + 0.5
+            );
         }
 
-        return player.getPos();
+        BlockPos blockPos = player.getBlockPos();
+        return new Vec3d(
+                blockPos.getX() + 0.5,
+                player.getY(),
+                blockPos.getZ() + 0.5
+        );
     }
 
     private static void spawnRing(
             ServerWorld world,
             ServerPlayerEntity player,
-            Vec3d referencePoint,
+            double centerX,
+            double centerZ,
             Vec3d spawnPoint,
             double targetRadius,
             List<AnimatedTnt> animatedTnt
     ) {
         for (int index = 0; index < DiamondOrbitalSpellConfig.TNT_PER_RING; index++) {
             double angle = (Math.PI * 2.0 * index) / DiamondOrbitalSpellConfig.TNT_PER_RING;
-            double targetX = referencePoint.x + Math.cos(angle) * targetRadius;
-            double targetZ = referencePoint.z + Math.sin(angle) * targetRadius;
+            double targetX = centerX + Math.cos(angle) * targetRadius;
+            double targetZ = centerZ + Math.sin(angle) * targetRadius;
 
             TntEntity tnt = spawnLitTnt(world, player, spawnPoint);
             animatedTnt.add(new AnimatedTnt(tnt.getUuid(), targetX, targetZ));
@@ -115,13 +131,14 @@ public final class DiamondOrbitalStrike {
 
         private ActiveStrike(
                 RegistryKey<World> worldKey,
-                Vec3d referencePoint,
+                double startX,
+                double startZ,
                 List<AnimatedTnt> animatedTnt,
                 int ticksElapsed
         ) {
             this.worldKey = worldKey;
-            this.startX = referencePoint.x;
-            this.startZ = referencePoint.z;
+            this.startX = startX;
+            this.startZ = startZ;
             this.animatedTnt = animatedTnt;
             this.ticksElapsed = ticksElapsed;
         }
