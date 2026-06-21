@@ -2,6 +2,7 @@ package cherrow.unstableciv;
 
 import cherrow.unstableciv.item.ModItems;
 import cherrow.unstableciv.sound.ModSounds;
+import cherrow.unstableciv.spell.DiamondOrbitalStrike;
 import cherrow.unstableciv.spell.OrbitalThingy;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -28,7 +29,10 @@ public class Unstableciv implements ModInitializer {
 		ModItems.registerModItems();
 		ModSounds.registerSounds();
 
-		ServerTickEvents.END_SERVER_TICK.register(OrbitalThingy::tick);
+		ServerTickEvents.END_SERVER_TICK.register(server -> {
+			OrbitalThingy.tick(server);
+			DiamondOrbitalStrike.tick(server);
+		});
 
 		System.out.println("Please work I beg please please please");
 	}
