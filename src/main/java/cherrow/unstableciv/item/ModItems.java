@@ -2,12 +2,14 @@ package cherrow.unstableciv.item;
 import cherrow.unstableciv.Unstableciv;
 import cherrow.unstableciv.item.custom.OrbitalItem;
 import cherrow.unstableciv.item.custom.HighItem;
+import cherrow.unstableciv.item.custom.TotemOfRespawningItem;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 
 
 public class ModItems {
@@ -16,6 +18,9 @@ public class ModItems {
     public static final Item ORBITAL = registerItem(
             "orbital",
             new OrbitalItem(new Item.Settings().maxDamage(1)));
+    public static final Item TOTEM_OF_RESPAWNING = registerItem(
+            "totem_of_respawning",
+            new TotemOfRespawningItem(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(Registries.ITEM, Identifier.of(Unstableciv.MOD_ID, name), item);
@@ -31,6 +36,10 @@ public class ModItems {
 
         ItemGroupEvents.modifyEntriesEvent(ItemGroups.TOOLS).register(entries -> {
             entries.add(ORBITAL);
+        });
+
+        ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(entries -> {
+            entries.add(TOTEM_OF_RESPAWNING);
         });
     }
 }
