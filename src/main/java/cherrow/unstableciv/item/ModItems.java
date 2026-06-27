@@ -7,6 +7,7 @@ import cherrow.unstableciv.item.custom.HighItem;
 import cherrow.unstableciv.item.custom.IronFishingRodItem;
 import cherrow.unstableciv.item.custom.OrbitalItem;
 import cherrow.unstableciv.item.custom.TotemOfRespawningItem;
+import cherrow.unstableciv.item.custom.UselessIronOrbitalItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -22,16 +23,19 @@ public class ModItems {
             new OrbitalItem(new Item.Settings().maxDamage(1)));
     public static final Item COPPER_FISHING_ROD = registerItem(
             "copper_fishing_rod",
-            new CopperFishingRodItem(new Item.Settings().maxDamage(1)));
+            new CopperFishingRodItem(new Item.Settings()));
     public static final Item IRON_FISHING_ROD = registerItem(
             "iron_fishing_rod",
-            new IronFishingRodItem(new Item.Settings().maxDamage(1)));
+            new IronFishingRodItem(new Item.Settings()));
+    public static final Item USELESS_IRON_ORBITAL = registerItem(
+            "useless_iron_orbital",
+            new UselessIronOrbitalItem(new Item.Settings()));
     public static final Item GOLD_FISHING_ROD = registerItem(
             "gold_fishing_rod",
             new GoldFishingRodItem(new Item.Settings().maxDamage(1)));
     public static final Item DIAMOND_FISHING_ROD = registerItem(
             "diamond_fishing_rod",
-            new DiamondFishingRodItem(new Item.Settings().maxDamage(1)));
+            new DiamondFishingRodItem(new Item.Settings()));
     public static final Item TOTEM_OF_RESPAWNING = registerItem(
             "totem_of_respawning",
             new TotemOfRespawningItem(new Item.Settings().maxCount(1).rarity(Rarity.UNCOMMON)));

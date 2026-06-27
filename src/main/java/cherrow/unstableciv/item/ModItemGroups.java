@@ -30,6 +30,7 @@ public class ModItemGroups {
                             entries.add(ModItems.ORBITAL);
                             entries.add(ModItems.COPPER_FISHING_ROD);
                             entries.add(ModItems.IRON_FISHING_ROD);
+                            entries.add(ModItems.USELESS_IRON_ORBITAL);
                             entries.add(ModItems.GOLD_FISHING_ROD);
                             entries.add(ModItems.DIAMOND_FISHING_ROD);
                             entries.add(ModItems.TOTEM_OF_RESPAWNING);
